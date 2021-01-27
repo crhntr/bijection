@@ -1,0 +1,31 @@
+package bijection
+
+import (
+	"fmt"
+	"testing"
+)
+
+func TestMap(t *testing.T) {
+	l510 := Make[int, string]()
+
+	l510.Set(7567, "Rex")
+	l510.Set(5555, "Fives")
+	l510.Set(5597, "Jesse")
+	l510.Set(408, "Echo")
+
+	printEach := func(id int, name string) bool {
+		fmt.Println(id, name)
+		return true
+	}
+
+	l510.Range(printEach)
+
+	fmt.Println()
+
+	l510.DeleteX(5597)
+	l510.DeleteY("Echo")
+
+	inv := l510.Inverse()
+
+	inv.Range(SwapRangeFunc[int, string](printEach))
+}
