@@ -14,7 +14,7 @@ func MakeN[xt, yt comparable](n int) Map[xt, yt] {
 	}
 }
 
-type Map [XT, YT comparable] struct {
+type Map[XT, YT comparable] struct {
 	x2y map[XT]YT
 	y2x map[YT]XT
 }
@@ -52,7 +52,7 @@ func (mp Map[XT, YT]) DeleteY(key YT) {
 	delete(mp.x2y, otherKey)
 }
 
-func SwapRangeFunc[T1, T2 comparable](fn func(T1, T2) bool) func(T2, T1) bool {
+func SwapRangeFunc[T1, T2 interface{}](fn func(T1, T2) bool) func(T2, T1) bool {
 	return func(t2 T2, t1 T1) bool {
 		return fn(t1, t2)
 	}
