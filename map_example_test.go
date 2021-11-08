@@ -1,31 +1,28 @@
 package bijection
 
-import (
-	"fmt"
-	"testing"
-)
+import "testing"
 
 func TestMap(t *testing.T) {
-	l501 := Make[int, string]()
+	var l501 Map[int, string]
 
-	l501.Set(7567, "Rex")
-	l501.Set(5555, "Fives")
-	l501.Set(5597, "Jesse")
-	l501.Set(408, "Echo")
-
-	printEach := func(id int, name string) bool {
-		fmt.Println(id, name)
-		return true
+	l501.Add(7567, "Rex")
+	l501.Add(5555, "Fives")
+	l501.Add(5597, "Jesse")
+	l501.Add(408, "Echo")
+	if l501.Len() != 4 {
+		t.Fail()
 	}
 
-	l501.Range(printEach)
+	l501.DeleteA(5597)
+	l501.DeleteB("Echo")
+	if l501.Len() != 2 {
+		t.Fail()
+	}
 
-	fmt.Println()
-
-	l501.DeleteX(5597)
-	l501.DeleteY("Echo")
+	l501.Range(func(int, string) {})
+	l501.Range(SwapRangeFunc(func(string, int) {}))
 
 	inv := l501.Inverse()
-
-	inv.Range(SwapRangeFunc[int, string](printEach))
+	inv.Range(func(string, int) {})
+	inv.Range(SwapRangeFunc(func(int, string) {}))
 }
