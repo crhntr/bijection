@@ -5,6 +5,17 @@ type Map[A, B comparable] struct {
 	ba map[B]A
 }
 
+func New[A, B comparable](m map[A]B) Map[A, B] {
+	result := Map[A, B]{
+		ab: make(map[A]B, len(m)),
+		ba: make(map[B]A, len(m)),
+	}
+	for a, b := range m {
+		result.Add(a, b)
+	}
+	return result
+}
+
 func (mp Map[A, B]) GetA(key B) (A, bool) {
 	if mp.ab == nil {
 		var v A
